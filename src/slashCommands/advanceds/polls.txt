@@ -1,0 +1,51 @@
+const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
+
+module.exports = {
+  data: new SlashCommandBuilder()
+    .setName("poll")
+    .setDescription("Crie uma enquete para o servidor!")
+    .addStringOption(option =>
+      option.setName("question")
+        .setDescription("A pergunta da enquete")
+        .setRequired(true))
+    .addStringOption(option =>
+      option.setName("option1")
+        .setDescription("Primeira opção")
+        .setRequired(true))
+    .addStringOption(option =>
+      option.setName("option2")
+        .setDescription("Segunda opção")
+        .setRequired(true))
+    .addStringOption(option =>
+      option.setName("option3")
+        .setDescription("Terceira opção (opcional)"))
+    .addStringOption(option =>
+      option.setName("option4")
+        .setDescription("Quarta opção (opcional)")),
+
+  async execute(interaction) {
+    const question = interaction.options.getString("question");
+    const option1 = interaction.options.getString("option1");
+    const option2 = interaction.options.getString("option2");
+    const option3 = interaction.options.getString("option3") || "N/A";
+    const option4 = interaction.options.getString("option4") || "N/A";
+
+    const embed = new EmbedBuilder()
+      .setTitle(`🗳 Enquete: ${question}`)
+      .setDescription(`
+        1️⃣ ${option1}
+        2️⃣ ${option2}
+        3️⃣ ${option3}
+        4️⃣ ${option4}
+      `)
+      .setColor("#FF6347")
+      .setTimestamp();
+
+    const pollMessage = await interaction.reply({ embeds: [embed], fetchReply: true });
+
+    await pollMessage.react("1️⃣");
+    await pollMessage.react("2️⃣");
+    if (option3 !== "N/A") await pollMessage.react("3️⃣");
+    if (option4 !== "N/A") await pollMessage.react("4️⃣");
+  },
+};

@@ -1,0 +1,29 @@
+{
+  "name": "nyx-sales-v14",
+  "main": "main.js",
+  "author": "@known.js",
+  "license": "ISC",
+  "dependencies": {
+    "@discordjs/voice": "^0.16.1",
+    "@iamtraction/google-translate": "^2.0.1",
+    "akaneko": "^5.3.0",
+    "axios": "^1.6.1",
+    "colors": "^1.4.0",
+    "discord-gamecord": "^4.4.1",
+    "discord.js": "^14.13.0",
+    "e621": "^2.2.6",
+    "hmfull": "^2.4.3",
+    "install": "^0.13.0",
+    "mathjs": "^12.4.0",
+    "mercadopago": "^2.0.4",
+    "moment": "^2.29.4",
+    "mongoose": "^8.2.1",
+    "node-fetch": "^2.7.0",
+    "npm": "^10.9.2",
+    "quick.db": "^9.1.7",
+    "shefin-tinyurl": "^1.0.0",
+    "snoowrap": "^1.23.0",
+    "wio.db": "^4.0.22",
+    "xml2js": "^0.6.2"
+  }
+}

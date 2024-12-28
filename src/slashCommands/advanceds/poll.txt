@@ -1,0 +1,56 @@
+const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
+
+module.exports = {
+  data: new SlashCommandBuilder()
+    .setName("poll")
+    .setDescription("Cria uma enquete para votação")
+    .addStringOption(option => 
+      option.setName("question")
+        .setDescription("Pergunta da enquete")
+        .setRequired(true))
+    .addStringOption(option => 
+      option.setName("option1")
+        .setDescription("Primeira opção")
+        .setRequired(true))
+    .addStringOption(option => 
+      option.setName("option2")
+        .setDescription("Segunda opção")
+        .setRequired(true))
+    .addStringOption(option => 
+      option.setName("option3")
+        .setDescription("Terceira opção")
+        .setRequired(false))
+    .addStringOption(option => 
+      option.setName("option4")
+        .setDescription("Quarta opção")
+        .setRequired(false)),
+
+  async execute(interaction) {
+    const question = interaction.options.getString("question");
+    const option1 = interaction.options.getString("option1");
+    const option2 = interaction.options.getString("option2");
+    const option3 = interaction.options.getString("option3") || null;
+    const option4 = interaction.options.getString("option4") || null;
+
+    const options = [option1, option2, option3, option4].filter(option => option != null);
+    const emojis = ["🇦", "🇧", "🇨", "🇩"];
+
+    let description = "";
+    options.forEach((option, index) => {
+      description += `${emojis[index]} ${option}\n`;
+    });
+
+    const embed = new EmbedBuilder()
+      .setTitle(`Enquete: ${question}`)
+      .setDescription(description)
+      .setColor("#FFCC00")
+      .setTimestamp();
+
+    const pollMessage = await interaction.reply({ embeds: [embed], fetchReply: true });
+
+    // Reage com emojis para cada opção
+    for (let i = 0; i < options.length; i++) {
+      await pollMessage.react(emojis[i]);
+    }
+  },
+};
